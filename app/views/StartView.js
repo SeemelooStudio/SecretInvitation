@@ -8,6 +8,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
             el: "#main",
             
             initialize: function (options) {
+                this.isRendered = false;
                 this.listenTo(this, "render", this.postRender);
                 $("body").hammer({
                   preventDefault: true
@@ -69,6 +70,8 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 this.currentStage.elementsAnimation.animateIn(function(){
                     self.onEnterStage();
                 });
+                
+                this.isRendered = true;
             },
             onSwipeup: function(ev) {
                 ev.gesture.stopPropagation();

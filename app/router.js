@@ -25,6 +25,7 @@ define(function(require, exports, module) {
     },
     routes: {
       "": "index",
+      "download":"download",
       "*action":"index"
     },
 
@@ -45,6 +46,13 @@ define(function(require, exports, module) {
           startView.render();
       });
       
+    },
+    download: function() {
+        if ( startView.isRendered ) {
+            
+        } else {
+            
+        }
     }
   });
 });
