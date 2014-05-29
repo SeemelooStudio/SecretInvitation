@@ -5,7 +5,7 @@ define(function(require, exports, module) {
   var Backbone = require("backbone");
   require("hammerjs");
   require("jqueryhammer");
-  
+  var Utils = require("utils");
   //views
   var MainView = require("views/MainView");
   var mainView;
@@ -48,7 +48,12 @@ define(function(require, exports, module) {
       
     },
     download: function() {
-        window.location.href="https://itunes.apple.com/us/app/mi-misecret/id880007797?ls=1&mt=8";
+        if ( Utils.isWechat() ) {
+            Backbone.history.navigate("", { trigger: true, replace: true });
+        } else {
+            window.location.href="https://itunes.apple.com/us/app/mi-misecret/id880007797?ls=1&mt=8";
+        }
+        
     }
   });
 });

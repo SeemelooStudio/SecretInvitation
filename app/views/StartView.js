@@ -20,7 +20,9 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 "swipeup":"onSwipeup",
                 "dragup":"onSwipeup",
                 "swipedown":"onSwipedown",
-                "dragdown":"onSwipedown"
+                "dragdown":"onSwipedown",
+                "click #download": "showDownloadTips",
+                "click #phone": "showDownloadTips"
             },
             render: function () {
                 this.template = _.template(template, {});
@@ -132,6 +134,21 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
 
                     });
                 }
+            },
+            showDownloadTips: function(ev) {
+                if ( Utils.isWechat() ) {
+                    ev.preventDefault();
+                    ev.stopPropagation();
+                    $("#main").addClass("blur");
+                    $("#downloadOverlay").fadeIn().tap(function(){
+                        $("#main").removeClass("blur");
+                        $("#downloadOverlay").fadeOut();
+                        Backbone.history.navigate("", { trigger: false, replace: true });
+                    });
+                    
+                    Backbone.history.navigate("download", { trigger: false, replace: true });
+                }
+                
             }
         });
         return StartView;
