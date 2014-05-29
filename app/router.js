@@ -48,11 +48,7 @@ define(function(require, exports, module) {
       
     },
     download: function() {
-        if ( startView.isRendered ) {
-            
-        } else {
-            
-        }
+        window.location.href="https://itunes.apple.com/us/app/mi-misecret/id880007797?ls=1&mt=8";
     }
   });
 });
