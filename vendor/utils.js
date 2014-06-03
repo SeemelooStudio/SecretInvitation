@@ -18,6 +18,9 @@ var Utils = {
             return false;
         }        
     },
+    isMobileSafari: function() {
+        return navigator.userAgent.match(/(iPod|iPhone|iPad)/) && navigator.userAgent.match(/AppleWebKit/);  
+    },
     isQzone: function() {
         if ( $(".qzone").size()>0 ){
             return true;

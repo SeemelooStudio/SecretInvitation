@@ -30,7 +30,14 @@ define(function(require, exports, module) {
     },
 
     index: function() {
-      require(["image!app/img/fox.png",
+        if( Utils.isMobileSafari() && !Utils.isWechat()) 
+        { 
+           // it is mobile browser
+           window.location.href="https://itunes.apple.com/us/app/mi-misecret/id880007797?ls=1&mt=8";
+        }
+        else
+        {
+           require(["image!app/img/fox.png",
                "image!app/img/logofox.png",
                "image!app/img/window.png",
                "image!app/img/windowtop.png",
@@ -44,15 +51,21 @@ define(function(require, exports, module) {
                "image!app/img/bg.png",
                "image!app/img/intro.png"],function(fox,logofox,window,windowtop,about1,about2,about3,about4,phone,download,arrow,bg,intro){
           startView.render();
+        
+      
       });
+      
+      }
       
     },
     download: function() {
+
         if ( Utils.isWechat() ) {
             Backbone.history.navigate("", { trigger: true, replace: true });
         } else {
             window.location.href="https://itunes.apple.com/us/app/mi-misecret/id880007797?ls=1&mt=8";
         }
+        
         
     }
   });

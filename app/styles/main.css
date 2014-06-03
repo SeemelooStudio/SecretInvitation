@@ -196,9 +196,16 @@ img {
     background:#fff url(../../app/img/bg.png) center center no-repeat;
 }
 #download {
-    width: 80px;
+    width: 120px;
     margin: 0 auto;
     display: block;
+}
+#downloadrt {
+    width: 50px;
+    position: absolute;
+    position: fixed;
+    right: 15px;
+    top: -2px;
 }
 @-webkit-keyframes float {
   0% {

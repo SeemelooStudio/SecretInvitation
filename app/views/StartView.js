@@ -21,8 +21,9 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 "dragup":"onSwipeup",
                 "swipedown":"onSwipedown",
                 "dragdown":"onSwipedown",
-                "click #download": "showDownloadTips",
-                "click #phone": "showDownloadTips"
+                "tap #download": "showDownloadTips",
+                "tap #phone": "showDownloadTips",
+                "tap #downloadrt": "showDownloadTips"
             },
             render: function () {
                 this.template = _.template(template, {});
@@ -108,6 +109,11 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                     this.currentStageIndex = this.currentStageIndex + 1;
                     this.currentStage = this.stages[this.currentStageIndex];
                     
+                    if(this.currentStageIndex == this.stages.length - 1 ) {
+                        //last stage
+                        $("#downloadrt").fadeOut();
+                    }
+                    
                     this.onExitStage();
                     previousStage.stageAnimation.animateOut(function() {
                         self.currentStage.elementsAnimation.animateIn(function(){
@@ -131,22 +137,32 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                     self.currentStage.stageAnimation.animateIn( function() {
                             previousStage.elementsAnimation.initObjects();
                             self.onEnterStage();
+                            if(self.currentStageIndex == self.stages.length - 2 ) {
+                                //last stage
+                                $("#downloadrt").fadeIn();
+                            }
 
                     });
                 }
             },
             showDownloadTips: function(ev) {
                 if ( Utils.isWechat() ) {
-                    ev.preventDefault();
-                    ev.stopPropagation();
+                    ev.gesture.preventDefault();
+                    ev.gesture.stopPropagation();
                     $("#main").addClass("blur");
-                    $("#downloadOverlay").fadeIn().tap(function(){
+                    
+                    Backbone.history.navigate("download", { trigger: false, replace: true });
+                    
+                    $("#downloadOverlay").fadeIn();
+                    $("#downloadOverlay").tap(function(){
                         $("#main").removeClass("blur");
                         $("#downloadOverlay").fadeOut();
                         Backbone.history.navigate("", { trigger: false, replace: true });
                     });
                     
-                    Backbone.history.navigate("download", { trigger: false, replace: true });
+                    
+                } else {
+                    window.location.href="https://itunes.apple.com/us/app/mi-misecret/id880007797?ls=1&mt=8";
                 }
                 
             }

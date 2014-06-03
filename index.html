@@ -28,14 +28,44 @@
     
   </div>
   <script>
+    var shareInfo = shareInfo || {
+        "appid": "wx56461d8ee8d9dee5",
+        "title": "正版「秘密」，邀您体验",
+        "desc": "Share with your friends, secretly. Speak freely.",
+        "img_url":"http://download.secret-cn.com/app/img/fox.png",
+        "img_width": "300",
+        "img_height": "300",
+        "link":window.location.href
+    };
     document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
         WeixinJSBridge.call('showOptionMenu');
         document.getElementsByTagName('body')[0].setAttribute("class", "wechat");
     });
-    
+    function shareFriend() {
+        WeixinJSBridge.invoke('sendAppMessage',shareInfo, function(res) {
+            //_report('send_msg', res.err_msg);
+        })
+    }
+    function shareTimeline() {
+        WeixinJSBridge.invoke('shareTimeline',shareInfo, function(res) {
+               //_report('timeline', res.err_msg);
+        });
+    }
+
+    // 当微信内置浏览器完成内部初始化后会触发WeixinJSBridgeReady事件。
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        // 发送给好友
+        WeixinJSBridge.on('menu:share:appmessage', function(argv){
+            shareFriend();
+        });
+        // 分享到朋友圈
+        WeixinJSBridge.on('menu:share:timeline', function(argv){
+            shareTimeline();
+        });
+    }, false);    
   </script>
   <!-- Application source. -->
-  <!-- build:[src] source.min.js -->
+  <!-- build:[src] source.min.js?v=3.4 -->
   <script data-main="app/main" src="/vendor/bower/requirejs/require.js"></script>
   <!-- /build -->
 </body>
